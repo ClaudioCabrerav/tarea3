@@ -1,0 +1,65 @@
+<form [formGroup]="form">
+
+    <div>
+        <label class="form-label">Título Producto</label>
+        <input type="text" class="form-control" placeholder="titulo producto" formControlName="title">
+    </div>
+    <div class="text-danger" *ngIf="form.get('title')!.dirty && form.get('title')!.errors">
+        Campo requerido, no puede superar los 10 caracteres
+    </div>
+
+    <div>
+        <label class="form-label">Descrición Producto</label>
+        <input type="text" class="form-control" placeholder="descripción producto" formControlName="description">
+    </div>
+    <div class="text-danger" *ngIf="form.get('description')!.dirty && form.get('description')!.errors">
+        Campo requerido, no puede superar los 200 caracteres
+    </div>
+
+    <div>
+        <label class="form-label">Url Producto</label>
+        <input type="text" class="form-control" placeholder="https://..." formControlName="image">
+    </div>
+    <div class="text-danger" *ngIf="form.get('image')!.dirty && form.get('image')!.errors">
+        Campo requerido, no puede superar los 200 caracteres
+    </div>
+
+    <div>
+        <label class="form-label">Categoría Producto</label>
+        <input type="text" class="form-control" placeholder="Ej.: electrónica" formControlName="category">
+    </div>
+    <div class="text-danger" *ngIf="form.get('category')!.dirty && form.get('category')!.errors">
+        Campo requerido, no puede superar los 40 caracteres
+    </div>
+
+    <div>
+        <label class="form-label">Precio Producto ($)</label>
+        <input type="number" class="form-control" placeholder="1" formControlName="price">
+    </div>
+    <div class="text-danger" *ngIf="form.get('price')!.dirty && form.get('price')!.errors">
+        Campo requerido, Entre $1 - $10.000.000
+    </div>
+    <div formGroupName="rating">
+        <div>
+            <label class="form-label" for="typeNumber">Cantidad de Calificaciones</label>
+            <input type="number" class="form-control" formControlName="count" [disabled]="true">
+        </div>
+
+        <div>
+            <label class="form-label">Calificacion General ({{productoEditar.rating.rate}})</label>
+
+            <input type="range" class="form-control-range" min="0" max="5" step="0.5" formControlName="rate" [disabled]="true">
+        </div>
+        <div class="text-danger" *ngIf="form.get('rating.rate')!.dirty && form.get('rating.rate')!.errors">
+            Campo requerido, Entre 1 - 5
+        </div>
+
+    </div>
+</form>
+
+<div class="d-grid gap-2 mt-4">
+    <button type="button" class="btn btn-primary btn-block" (click)="guardarProducto()" [disabled]="form.invalid || form.disabled">
+      <fa-icon [icon]="['fas', 'spinner']" [spin]="true" *ngIf="form.disabled"></fa-icon>
+      <span *ngIf="!form.disabled">Guardar</span>
+    </button>
+</div>
